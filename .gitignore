@@ -1,0 +1,26 @@
+node_modules/
+dist/
+coverage/
+.vite/
+.DS_Store
+*.log
+.env*
+!.env.example
+# Original assets, locally imported mod ZIPs, installed games and local research
+local-game-data/
+original-assets/
+user-game-files/
+user-mods/
+*.original-save
+# Private exact installation paths, restricted evidence, local reports
+project/private/
+project/INTAKE.local.md
+project/outputs/
+# Tool/build scratch
+.tmp/
+tmp/
+# User-owned game data: never check into Git, including Docker mount sources.
+/public/game/*
+!/public/game/README.md
+/public/mods/*
+!/public/mods/README.md

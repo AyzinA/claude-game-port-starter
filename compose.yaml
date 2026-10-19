@@ -1,0 +1,15 @@
+services:
+  game-port:
+    build: .
+    image: game-port-lab:local
+    ports:
+      - "127.0.0.1:5317:5317"
+    volumes:
+      - ./public/game:/app/public/game:ro
+      - ./public/mods:/app/public/mods:ro
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m

@@ -1,0 +1,29 @@
+{
+  "name": "game-port-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Research-first browser game-port starter with automatic local game/mod library and Docker support",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run && node --test server/library.test.mjs",
+    "start": "node server/index.mjs",
+    "test:server": "node --test server/library.test.mjs"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2",
+    "three": "^0.180.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.180.0",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.0",
+    "vitest": "^3.2.4"
+  }
+}

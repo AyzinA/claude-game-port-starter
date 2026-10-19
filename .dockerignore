@@ -1,0 +1,15 @@
+.git
+node_modules
+dist
+coverage
+.tmp
+*.log
+.env*
+project/private
+project/outputs
+public/game
+public/mods
+original-assets
+local-game-data
+user-game-files
+user-mods
