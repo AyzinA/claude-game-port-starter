@@ -21,3 +21,13 @@
 **Agent:** "I found an existing game installation under `public/game` and will use it read-only. I will check its exact edition, research the engine and format compatibility, then report feasibility. I also found the local mod folder. No game upload is needed."
 
 If `game.json` is missing and the original game's edition cannot be identified reliably, the agent asks only for the missing edition/title, **not** for a path or upload. Docker is for running the browser shell, not the Claude Code agent.
+
+## After GO: autopilot to the credits (fictional)
+
+**User:** "Accepted. Keep going until the credits."
+
+**Agent:** "Built `project/PLAYTHROUGH_MAP.md` from the game's menu definitions, level list and credits file: 14 front-end screens, 22 levels, 9 system screens, 11 cutscenes and 3 ending nodes. Starting `/port-autopilot`. I'll work node by node, proving each one with the boot-to-credits autoplay, and only stop when every node is verified or blocked, or the budget runs out."
+
+*(…many iterations later…)*
+
+**Agent:** "Map complete: 54 verified, 4 blocked, 1 n/a. The blocked nodes are the Bink intro and three in-engine cutscenes, which need locally converted WebM (see docs/19, media section). The `full` autoplay reaches the end credits headless (3m12s) and in Chromium. Next step for you: run the FFmpeg conversion listed in STATUS.md, then `/port-autopilot` will finish the 4 blocked nodes."

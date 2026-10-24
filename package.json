@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Research-first browser game-port starter with automatic local game/mod library and Docker support",
+  "description": "Research-first, boot-to-credits browser game-port workflow (TypeScript + Vite + Three.js) with original-UI runtime, autoplay verification, autopilot, local game/mod library and Docker",
   "engines": {
     "node": ">=22"
   },
@@ -12,15 +12,22 @@
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "vitest run && node --test server/library.test.mjs",
-    "start": "node server/index.mjs",
-    "test:server": "node --test server/library.test.mjs"
+    "test": "vitest run && node --test server/library.test.mjs scripts/scripts.test.mjs",
+    "test:unit": "vitest run",
+    "test:server": "node --test server/library.test.mjs",
+    "test:scripts": "node --test scripts/scripts.test.mjs",
+    "test:e2e": "playwright test",
+    "inventory": "node scripts/inventory.mjs",
+    "playthrough": "node scripts/playthrough-status.mjs",
+    "start": "node server/index.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.2",
     "three": "^0.180.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.20.5",
     "@types/three": "^0.180.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.0",

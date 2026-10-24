@@ -12,4 +12,6 @@ export default defineConfig({
   server: { host: '127.0.0.1', port: 5317 },
   preview: { host: '127.0.0.1', port: 5317 },
   build: { target: 'es2022' },
+  // server/*.test.mjs and scripts/*.test.mjs use node:test; Playwright specs live in tests/e2e.
+  test: { include: ['tests/**/*.test.ts'] },
 });

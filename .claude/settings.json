@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run typecheck)",
+      "Bash(npm test)",
+      "Bash(npm run test)",
+      "Bash(npm run test:*)",
+      "Bash(npm run build)",
+      "Bash(npm run inventory)",
+      "Bash(npm run inventory:*)",
+      "Bash(npm run playthrough)",
+      "Bash(npm run playthrough:*)",
+      "Bash(npx vitest run:*)",
+      "Bash(npx playwright test:*)",
+      "Bash(node --test:*)",
+      "Bash(node scripts/inventory.mjs:*)",
+      "Bash(node scripts/playthrough-status.mjs:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "deny": [
+      "Bash(git push:*)",
+      "Edit(public/game/**)",
+      "Write(public/game/**)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/autopilot-stop.mjs\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

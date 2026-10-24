@@ -8,7 +8,7 @@
 
 **Ownership / authorized access:** _not confirmed_
 
-**Desired scope:** full game if feasible; otherwise a research-backed prototype proposal.
+**Desired scope:** full game **boot to end credits with the original UI** if feasible (docs/16); otherwise a research-backed prototype proposal.
 
 **Target platform:** desktop Chromium initially (assumption, confirm if important).
 
