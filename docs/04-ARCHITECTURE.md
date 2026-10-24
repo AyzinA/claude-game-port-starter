@@ -29,19 +29,36 @@ Browser UI (Vite/TypeScript)   Local install directory / permitted local archive
 
 ## Modules
 
-- `src/core/`: byte readers, unit conversions, IDs, diagnostics, fixed clock.
-- `src/vfs/`: mount model and virtual resource resolution. **Starter implemented.**
-- `src/import/`: browser local game import. **Starter indexes files only.**
-- `src/formats/<format>/`: bounded parser outputs, no Three.js object allocation.
-- `src/engine/`: engine-neutral simulation, ECS, commands/events, time, physics, AI (future).
-- `src/games/<game-id>/`: version profiles, script bindings, game-native semantics (future).
-- `src/render/`: Three.js conversion and lifecycle (future).
-- `src/mods/`: data-only mod manifests, trusted precedence, compatibility verification. **Starter limited.**
-- `src/ui/`: game launcher, controls, import, menus, accessibility (future).
+- `src/vfs/`: mount model and virtual resource resolution. **Implemented.**
+- `src/import/`: browser local game import and preloaded library. **Indexes files only.**
+- `src/engine/`: **Implemented core:**
+  - `FixedClock`: fixed ticks with bounded catch-up.
+  - `Input`: action bindings for keyboard/gamepad/pointer, plus injection.
+  - `GameFlow`: state stack (boot → menus → gameplay → overlays → credits) with transition history.
+  - `Rng`: seeded.
+  - `Automation`: autoplay scripts.
+
+  Future: ECS, physics, AI, scripting VMs.
+- `src/ui/`: **Implemented:** `Viewport` (original virtual resolution with letterbox/integer/stretch), `UiScreen` (widget tree, focus navigation, hit-testing, draw lists) and `Fonts` (bitmap font layout).
+- `src/render/`: **Implemented:** `ThreeStage` (WebGL world plus a UI canvas fitted to the virtual resolution) and `CanvasUiRenderer`. Future: original-format mesh/material/animation adapters.
+- `src/runtime/GameRuntime.ts`: composes one adapter with the engine. Runs headless (tests/autoplay) or under the host.
+- `src/host/BrowserHost.ts`: real-time loop, DOM/gamepad input, fullscreen, and the `window.__gamePort` automation bridge (`?automation=1`).
+- `src/games/GameAdapter.ts` + `src/games/index.ts`: game module contract and registry. `src/games/demo/` is the synthetic reference adapter; real games go in `src/games/<game-id>/`.
+- `src/formats/<format>/`: bounded parser outputs, no Three.js object allocation (future, per game).
+- `src/mods/`: data-only mod manifests, trusted precedence, compatibility verification. **Limited.**
 
 ## Contracts
 
-Game module defines source detector, mount rules, decoded resource adapters, script engine strategy, gameplay compatibility, starting world, save format and mod support. Generic engine must not import from any game module. No monolithic game file or ad hoc global state.
+A game module implements `GameAdapter`:
+
+- source detector (`detect`);
+- original virtual resolution and fit, and tick rate;
+- default bindings;
+- UI asset loading (`loadUiAssets`);
+- every screen as a `GameState` (`createStates`);
+- `autoplay` scripts, including one `full` boot-to-credits run.
+
+It also owns mount rules, decoded resource adapters, the script engine strategy, save format and mod support. The generic engine must not import from any game module. No monolithic game file or ad hoc global state.
 
 ## Timing
 

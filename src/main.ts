@@ -1,5 +1,6 @@
 import './styles.css';
-import { DemoWorld } from './runtime/DemoWorld';
+import { BrowserHost } from './host/BrowserHost';
+import { selectAdapter } from './games';
 import { OverlayVfs } from './vfs/OverlayVfs';
 import { listUserSelectedGameDirectory } from './import/LocalGameImport';
 import { loadLocalModZip } from './mods/ModSideload';
@@ -28,14 +29,36 @@ const panels = element('div', 'panels');
 shell.append(panels);
 const stage = element('section', 'stage');
 panels.append(stage);
-const statusTag = element('span', 'pill', 'NEUTRAL DEMO · NOT A PORT');
+const statusTag = element('span', 'pill', 'STARTING…');
+const fullscreenButton = element('button', 'button compact', 'Fullscreen');
 const stageHeader = element('div', 'stage-header');
-stageHeader.append(element('h2', '', 'Three.js runtime shell'), statusTag);
+const stageTools = element('div', 'stage-tools');
+stageTools.append(statusTag, fullscreenButton);
+stageHeader.append(element('h2', '', 'Game runtime'), stageTools);
 stage.append(stageHeader);
 const canvasMount = element('div', 'canvas-mount');
 stage.append(canvasMount);
-new DemoWorld(canvasMount);
-stage.append(element('p', 'muted', 'Procedural scene only. Original game assets appear after implementing that game’s format adapter.'));
+fullscreenButton.addEventListener('click', () => { void canvasMount.requestFullscreen?.().then(() => canvasMount.focus()); });
+const stageNote = element('p', 'muted', '');
+stage.append(stageNote);
+
+const automation = new URLSearchParams(location.search).has('automation');
+let host: BrowserHost | null = null;
+let launching = Promise.resolve();
+/** (Re)start the runtime with the adapter that best matches the mounted game. */
+function launch(profileId: string): Promise<void> {
+  launching = launching.then(async () => {
+    host?.dispose();
+    host = null;
+    const adapter = selectAdapter(vfs, profileId);
+    statusTag.textContent = adapter.synthetic ? 'NEUTRAL DEMO · NOT A PORT' : `${adapter.name.toUpperCase()} · PORT IN PROGRESS`;
+    stageNote.textContent = adapter.synthetic
+      ? 'Synthetic boot-to-credits demo (no original content). Click the game, then use arrows/WASD, Enter and Esc. A real port replaces it with src/games/<game-id>/.'
+      : `Running the ${adapter.name} adapter on locally mounted original data. Fidelity status: project/PLAYTHROUGH_MAP.md.`;
+    host = await BrowserHost.create({ container: canvasMount, adapter, vfs, automation });
+  }).catch(error => { stageNote.textContent = `Runtime failed to start: ${String(error)}`; });
+  return launching;
+}
 
 const sidebar = element('aside', 'sidebar');
 panels.append(sidebar);
@@ -97,6 +120,7 @@ folderInput.addEventListener('change', async () => {
     showStatus(`Indexed ${imported.files.size} files from “${imported.detectedFolderName}”; rejected ${imported.rejected}. These are NOT decoded into a playable game yet.`);
     renderVfs();
     const selectedProfile = gameId.value.trim();
+    void launch(selectedProfile);
     if (/^[a-z0-9][a-z0-9_-]{1,63}$/i.test(selectedProfile)) {
       try {
         const mods = await preloadModsForSelectedGame(vfs, selectedProfile);
@@ -137,9 +161,11 @@ void preloadLibrary(vfs).then(result => {
     showStatus(`No original game data found in public/game. Select your game folder manually to index it.${result.warnings.length ? ` Warnings: ${result.warnings.join('; ')}` : ''}`);
   }
   renderVfs();
+  return launch(gameId.value.trim());
 }).catch(error => {
   showStatus(`Local library unavailable: ${String(error)}. You can still choose a local game folder manually.`);
   renderVfs();
+  return launch(gameId.value.trim());
 });
 const footer = element('footer', 'footer');
 footer.append('To start a real port: open Claude Code in this directory and run ');

@@ -14,7 +14,9 @@ The agent researches and implements compatible native gameplay mechanics, parser
 
 ## Task lifecycle
 
-`inspect -> document evidence -> decide gate -> design -> minimal implementation -> focused tests -> real-asset test -> report -> checkpoint`.
+`inspect -> document evidence -> decide gate -> map node -> design -> minimal implementation -> focused tests -> autoplay proof -> real-asset/screenshot check -> update map -> checkpoint -> next node`.
+
+After the feasibility gate, the agent works **autonomously** through `project/PLAYTHROUGH_MAP.md` (docs/18). It interrupts the user only for decisions or data that only the user can provide, and batches those requests.
 
 Every task report includes status, files edited, scripts/commands run, tests pass/fail/not-run, original reference evidence, known deviations, and next exact task. An exception/refusal/permission denial must not be bypassed with another tool, agent or formulation.
 

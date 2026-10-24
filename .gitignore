@@ -24,3 +24,6 @@ tmp/
 !/public/game/README.md
 /public/mods/*
 !/public/mods/README.md
+# Playwright output (may contain screenshots of original game content)
+test-results/
+playwright-report/

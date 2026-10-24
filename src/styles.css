@@ -12,13 +12,17 @@ p { line-height: 1.55; }
 .stage, .sidebar { border: 1px solid #263849; border-radius: 16px; background: #101b29; padding: 19px; min-width: 0; }
 .stage-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 15px; }
 .pill { border-radius: 100px; padding: 6px 9px; color: #b9d8e1; background: #23384b; font-size: 10px; letter-spacing: .1em; font-weight: bold; }
-.canvas-mount { height: clamp(315px, 44vw, 610px); border-radius: 12px; overflow: hidden; background: #121d2c; }
-.canvas-mount canvas { display: block; width: 100%; height: 100%; }
+.stage-tools { display: flex; align-items: center; gap: 8px; }
+.canvas-mount { position: relative; height: clamp(315px, 44vw, 610px); border-radius: 12px; overflow: hidden; background: #000; outline: none; }
+.canvas-mount:focus-visible { box-shadow: 0 0 0 2px #4a9db5; }
+.canvas-mount:fullscreen { height: 100%; border-radius: 0; }
+.canvas-mount canvas { display: block; }
 .muted { color: #94aabc; font-size: 13px; margin-bottom: 0; }
 .sidebar h2 { margin-bottom: 6px; }
 .field-label { display: block; font-size: 13px; font-weight: 600; margin-top: 20px; margin-bottom: 8px; }
 .text-input { width: 100%; border: 1px solid #39536a; border-radius: 9px; background: #0b1623; color: #fff; font: inherit; padding: 11px; margin-bottom: 13px; }
 .button { width: 100%; cursor: pointer; border: 1px solid #49687b; background: #1d3649; color: #fff; padding: 13px; border-radius: 10px; font: inherit; font-weight: 650; margin-bottom: 10px; }
+.button.compact { width: auto; padding: 6px 10px; margin: 0; font-size: 12px; }
 .button.primary { background: #29748f; border-color: #4a9db5; }
 .button:disabled { opacity: .65; cursor: wait; }
 .button:hover:not(:disabled) { filter: brightness(1.15); }

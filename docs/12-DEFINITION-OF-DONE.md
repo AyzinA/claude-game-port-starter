@@ -16,6 +16,20 @@ Script/native ownership understood; equivalent inputs, timing, state transitions
 
 Mod format/version detected; compatible assets/data mounted safely; explicit precedence; conflicts; disable/uninstall; save fingerprint; rejection of unsupported executable mods; no changes to base files.
 
+## Screen done (front end, HUD, menus, credits)
+
+- Original layout data, fonts, textures and strings are used (no invented UI).
+- Navigation and back behaviour match the original.
+- The `full` autoplay reaches the screen.
+- The port screenshot was compared with an original reference screenshot.
+- Deviations are listed in `project/UI_INVENTORY.md`.
+
+## Boot-to-credits done
+
+- Every `project/PLAYTHROUGH_MAP.md` node is `verified`, `blocked` (with a reason) or `n/a`.
+- The `full` autoplay script reaches the end credits with player inputs only, both headless and in Chromium.
+- Blocked nodes are listed as gaps in the final report.
+
 ## Full-game claim done
 
 Only after original-start-to-end scenarios across required branches/modes, all relevant mechanics and regression tests, installed data and performance constraints are verified. 1:1 behavior is a **target, never an unqualified marketing claim**.

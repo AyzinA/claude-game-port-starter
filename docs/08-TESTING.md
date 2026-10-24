@@ -6,7 +6,8 @@
 - **Integration:** original archive -> decoded resource -> render; script callback -> ECS command; animation event -> hit; save -> load.
 - **Browser E2E:** launcher, local import, first original scene, controls, UI close/reopen, mod enable/disable, offline behavior.
 - **Differential:** compare same scenario against allowed original reference run, documenting time, positions, event order and tolerances.
-- **Story progression:** per-chapter/quest checkpoints with authentic and accelerated profiles; never substitute test state editing for quest completion.
+- **Story progression / boot-to-credits:** adapter `autoplay` scripts (docs/16 §3). The `full` script drives boot → menus → every gameplay node → end credits with player inputs only, with a `checkpoint` per map node. `npm test` runs it headless (fast, deterministic). `npm run test:e2e` runs it in Chromium via `window.__gamePort` and saves `test-results/playthrough/<adapter>/<NODE>.png` per checkpoint. Never substitute test state editing for quest completion.
+- **Visual comparison:** port screenshots vs original references in `project/private/reference/<NODE>.png`, compared and recorded per map node (docs/16 §4).
 
 ## Where no original assets are available
 
